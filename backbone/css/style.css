@@ -1,0 +1,26 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#wrapper {
+	width: 960px;
+	margin: 0px auto;
+}
+
+ul {
+	display: block;
+	margin: 10px 0px;
+}
+
+li {
+    display: block;
+    float: left;
+    list-style-type: none;
+    padding: 5px;
+    margin: 0px;
+}
+
+article {
+	width: 600px;
+	margin: 10px auto;
+}

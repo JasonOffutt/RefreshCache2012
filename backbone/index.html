@@ -3,6 +3,7 @@
 	<head>
 		<title>Backbone, why you so awesome?</title>
 		<script type="text/javascript" src="js/vendor/modernizr.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
 
 		<script id="video-template" type="text/html">
 	        <li class="message" data-id="<%= id %>">
@@ -15,11 +16,12 @@
 	        <iframe src="http://player.vimeo.com/video/<%= id %>?title=0&amp;byline=0&amp;portrait=0" width="400" height="225" frameborder="0"></iframe>
 	        <p><%= description %></p>
 	        <span><a href="http://vimeo.com/<%= id %>"><%= title %></a> by <%= user_name %>.</span>
-	        <a href="#home" title="Back" class="back">Back</a>
+	        <a href="#" title="Back" class="back">Back</a>
 	    </script>
 	</head>
 	<body>
 		<div id="wrapper">
+			<h1>Hay Backbone! Y u so awesoem?</h1>
 			<a href="#latest" title="Latest">Latest</a>
 			<div id="main"></div>
 		</div>

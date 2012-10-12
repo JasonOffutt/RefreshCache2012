@@ -1,18 +1,25 @@
 (function () {
 	'use strict';
 
+	// Create an event aggregator object to handle cross-class communication
 	var Events = _.extend({}, Backbone.Events),
+
+	// class definition to represent individual "Videos" from Vimeo's API
 		Video = Backbone.Model.extend({
 			initialize: function (options) {
 				this.set({ htmlId: 'video_' + this.get('id') }, { silent: true });
 			}
 		}),
+
+	// Collection of "Video" models to represent the full feed of data from Vimeo
 		VideoCollection = Backbone.Collection.extend({
 			model: Video,
 			comparator: function (video) {
 				return video.get('id');
 			}
 		}),
+
+	// View object to handle UI logic concerns. Represents the list of videos.
 		IndexView = Backbone.View.extend({
 			className: 'index',
 			tagName: 'ul',
@@ -43,6 +50,8 @@
 				return false;
 			}
 		}),
+
+	// View object to handle UI for an individual video.
 		MessageView = Backbone.View.extend({
 			className: 'video',
 			tagName: 'article',
@@ -63,15 +72,18 @@
 				return this;
 			},
 			backClicked: function (e) {
-				Events.trigger('message:index', id);
+				Events.trigger('message:index');
 				return false;
 			}
 		}),
+
+	// Router object that can act as a "Controller" of sorts ***. Handles
+	// URL routing.
 		MessageRouter = Backbone.Router.extend({
 			routes: {
 				'message/:id': 'message',
 				'latest': 'latest',
-				'*options': 'index'
+				'*options': 'index'	// Well-known backbone catch-all route
 			},
 			initialize: function (options) {
 				this.model = options.model || [];
@@ -82,19 +94,23 @@
 			index: function () {
 				var view = new IndexView({ model: this.model });
 				view.render();
+				this.navigate('', true);
 			},
 			message: function (id) {
 				var video = this.model.get(id),
 					view = new MessageView({ model: video });
 				view.render();
+				this.navigate('message/' + id, true);
 			},
 			latest: function () {
 				var video = this.model.at(0),
 					view = new MessageView({ model: video });
 				view.render();
+				this.navigate('latest', true);
 			}
 		});
 
+	// Wire up application in here...
 		$(function () {
 			$.getJSON('http://vimeo.com/api/v2/centralaz/videos.json?callback=?', function (data) {
 				var videoCollection = new VideoCollection(data),
